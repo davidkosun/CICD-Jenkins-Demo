@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jenkins-cicd-demo-web
+  name: jenkins-cicd-demo-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins-cicd-demo-web
+  template:
+    metadata:
+      labels:
+        app: jenkins-cicd-demo-web
+    spec:
+      containers:
+      - image: jenkins-cicd-demo-web
+        name: jenkins-cicd-demo-web
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "400M"
+          limits:
+            cpu: "500m"
+            memory: "800M"

@@ -1,0 +1,23 @@
+pipeline {
+  agent {}
+
+  tools {}
+
+  stages {
+    stage('Init') {
+
+    }
+
+    stage('Test') {
+
+    }
+
+    stage('Build') {
+
+    }
+
+    stage('Deploy') {
+      
+    }
+  }
+}
