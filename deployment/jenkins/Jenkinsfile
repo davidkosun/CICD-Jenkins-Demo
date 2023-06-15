@@ -5,19 +5,19 @@ pipeline {
 
   stages {
     stage('Init') {
-
+      // Setup
     }
 
     stage('Test') {
-
+      // Build test image and run test image
     }
 
     stage('Build') {
-
+      // Build production image
     }
 
     stage('Deploy') {
-      
+      // rollout restart 
     }
   }
 }
