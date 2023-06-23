@@ -6,18 +6,30 @@ pipeline {
   stages {
     stage('Init') {
       // Setup
+      steps {
+        sh 'npm install'
+      }
     }
 
     stage('Test') {
       // Build test image and run test image
+      steps {
+        sh 'npm run test'
+      }
     }
 
     stage('Build') {
       // Build production image
+      steps {
+        sh 'npm run build'
+      }
     }
 
     stage('Deploy') {
       // rollout restart 
+      steps {
+        sh 'npm run deploy'
+      }
     }
   }
 }
