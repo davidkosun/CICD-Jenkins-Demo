@@ -39,7 +39,7 @@ pipeline {
         message "Please select environment"
         ok "Submit"
         submitter "akaadmin,137487842+robert-wan-sos"
-        submitterParameter: 'approverId'
+        submitterParameter 'approverId'
         parameters {
           choice choices: ['Prod', 'Pre-Prod'], name: 'envType'
         }
