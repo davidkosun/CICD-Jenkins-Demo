@@ -6,11 +6,11 @@ pipeline {
   }
   
   stages {
-      stage('test script') {
-        steps {
-          sh './scripts/test.sh'
-        }
+    stage('test script') {
+      steps {
+        sh './scripts/test.sh'
       }
+    }
 
     stage('Init') {
       // Setup
@@ -36,6 +36,20 @@ pipeline {
     stage('Deploy') {
       // rollout restart 
       steps {
+        timeout(time: 15, unit: "MINUTES") {
+          input {
+            message 'Please select environment'
+            id 'envId'
+            ok 'Submit'
+            submitterParameter 'approverId'
+            parameters {
+                choice choices: ['Pre-Prod','Prod'], name: 'envType'
+            }
+          }
+        }
+
+        echo "Deployment approved to ${envType} by ${approverId}."
+
         sh 'npm run deploy'
       }
     }
