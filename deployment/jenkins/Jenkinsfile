@@ -37,15 +37,7 @@ pipeline {
       // rollout restart 
       steps {
         timeout(time: 15, unit: "MINUTES") {
-          input {
-            message 'Please select environment'
-            id 'envId'
-            ok 'Submit'
-            submitterParameter 'approverId'
-            parameters {
-                choice choices: ['Pre-Prod','Prod'], name: 'envType'
-            }
-          }
+          input message: 'Please select environment', ok: 'Submit', parameters: [choice(choices: ['Prod', 'Pre-Prod'], name: 'envType')], submitter: 'akaadmin,137487842+robert-wan-sos', submitterParameter: 'approverId'
         }
 
         echo "Deployment approved to ${envType} by ${approverId}."
