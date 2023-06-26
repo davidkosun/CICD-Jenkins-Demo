@@ -9,6 +9,7 @@ pipeline {
     stage('test script') {
       steps {
         sh './scripts/test.sh'
+        sleep 1000
       }
     }
 
@@ -16,6 +17,7 @@ pipeline {
       // Setup
       steps {
         sh 'npm install'
+        sleep 1000
       }
     }
 
@@ -23,6 +25,7 @@ pipeline {
       // Build test image and run test image
       steps {
         sh 'npm run test'
+        sleep 1000
       }
     }
 
@@ -30,6 +33,7 @@ pipeline {
       // Build production image
       steps {
         sh 'npm run build'
+        sleep 1000
       }
     }
 
@@ -49,7 +53,7 @@ pipeline {
       steps {
         echo "Deployment approved to ${envType} by ${approverId}."
 
-        sh 'npm run deploy'
+        sh 'npm run test'
         
       }
     }
