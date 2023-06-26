@@ -9,7 +9,7 @@ pipeline {
     stage('test script') {
       steps {
         sh './scripts/test.sh'
-        sleep 1000
+        sleep 1
       }
     }
 
@@ -17,7 +17,7 @@ pipeline {
       // Setup
       steps {
         sh 'npm install'
-        sleep 1000
+        sleep 1
       }
     }
 
@@ -25,7 +25,7 @@ pipeline {
       // Build test image and run test image
       steps {
         sh 'npm run test'
-        sleep 1000
+        sleep 1
       }
     }
 
@@ -33,7 +33,7 @@ pipeline {
       // Build production image
       steps {
         sh 'npm run build'
-        sleep 1000
+        sleep 1
       }
     }
 
