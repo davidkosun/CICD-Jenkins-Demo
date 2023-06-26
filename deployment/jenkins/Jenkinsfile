@@ -35,14 +35,18 @@ pipeline {
 
     stage('Deploy') {
       // rollout restart 
+      input {
+        message "Please select environment"
+        ok "Submit"
+        submitter "akaadmin,137487842+robert-wan-sos"
+        parameters choice(name: 'envType', choices: ['Prod', 'Pre-Prod'])
+      }
+
       steps {
-        timeout(time: 15, unit: "MINUTES") {
-          input message: 'Please select environment', ok: 'Submit', parameters: [choice(choices: ['Prod', 'Pre-Prod'], name: 'envType')], submitter: 'akaadmin,137487842+robert-wan-sos', submitterParameter: 'approverId'
-          echo "Deployment approved to ${envType} by ${approverId}."
+        echo "Deployment approved to ${envType} by ${approverId}."
 
-          sh 'npm run deploy'
-        }
-
+        sh 'npm run deploy'
+        
       }
     }
   }
