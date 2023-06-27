@@ -32,7 +32,7 @@ pipeline {
       }
     }
 
-    stage('Build') { 
+    stage('Build') {
       // Build production image
       steps {
         withCredentials([usernamePassword(credentialsId: '93fbb72d-ca9c-4407-a803-391bce2c42cf', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
