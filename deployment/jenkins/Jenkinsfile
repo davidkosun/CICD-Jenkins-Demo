@@ -16,24 +16,29 @@ pipeline {
     stage('Init') {
       // Setup
       steps {
+        echo "Init environment"
         sh 'npm install'
-        sleep 1
+        sh '''#!/bin/bash
+              echo $USER
+        '''
       }
     }
 
     stage('Test') {
       // Build test image and run test image
       steps {
-        sh 'npm run test'
-        sleep 1
+        sh 'docker build -t cicd-jenkins-demo-test --target test .'
+        sh 'docker run --rm --name cicd-jenkins-demo-test cicd-jenkins-demo-test'
       }
     }
 
     stage('Build') {
       // Build production image
       steps {
-        sh 'npm run build'
-        sleep 1
+        withCredentials([usernamePassword(credentialsId: '93fbb72d-ca9c-4407-a803-391bce2c42cf', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+          sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+          sh 'docker build -t k8s-demo-01 -t davidko1997/k8s-demo-01 .'
+        }
       }
     }
 
@@ -53,8 +58,20 @@ pipeline {
       steps {
         echo "Deployment approved to ${envType} by ${approverId}."
 
-        sh 'npm run test'
-        
+        sh 'docker push davidko1997/k8s-demo-01'
+        sh '''#/bin/bash
+          . ~/.bashrc
+          kubectl config set-context lke116074-ctx --namespace demo-app
+          kubectl apply -f ./deployment/kubernetes
+          kubectl rollout restart deploy jenkins-cicd-demo-web
+        '''
+      }
+    }
+
+    stage('Clean Up') {
+      steps {
+        echo 'Cleaning local images'
+        sh 'docker image prune -f'
       }
     }
   }

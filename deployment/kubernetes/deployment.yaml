@@ -15,7 +15,7 @@ spec:
         app: jenkins-cicd-demo-web
     spec:
       containers:
-      - image: jenkins-cicd-demo-web
+      - image: davidko1997/k8s-demo-01
         name: jenkins-cicd-demo-web
         resources:
           requests:
